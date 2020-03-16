@@ -1,0 +1,63 @@
+<html>
+    <head></head>
+    <body style="font-family: Arial, Helvetica, sans-serif; font-size: 12px;">
+        
+
+    <div style="margin-left: 35%; margin-top: 5%;">
+
+        <input type="text" name="search" placeholder="Search" id="search" class="search" style="padding: 5px; width: 200px ; height: 35px; border: 1px solid #333;">
+        
+        <input type="button" value="Search" name="search" onclick="searchName()" style="padding: 5px; width: 200px; color:cornsilk ; height: 35px; border: 1px solid #ededed; background-color: cadetblue;" >
+        <br><input type="checkbox" name="unique" id="unique" class="unique"> Show Only Unique names
+        <ul class="list">
+            
+        </ul>
+
+    </div>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script>
+            function searchName() {
+                $('.list').html('Searching for Users...');
+                searchTerm = $('.search').val();
+
+                if ($('.unique').is(":checked")) {
+                    dupes = true;
+                } else {
+                    dupes = false;
+                }
+
+                if (searchTerm.length < 1) {
+                    $('.list').html('Enter Search term');
+                    return;
+                }
+
+                $.ajax({
+                    type:"GET",
+                    dataType: "json",
+                    url: "http://localhost:8989/api/search?lastname="+searchTerm+'&dupes='+dupes,
+                    cache: false,
+                    success: function (data) {
+
+                        let users = data.data;
+                        $.each(users, function(index, value) {
+                            $('.list').html(value.length+' Users Found with last name matching: ' + searchTerm);
+                            $.each(value, function (index, valuen) {
+                                $('.list').append('<li>'+value[index].firstname+' '+value[index].lastname+'</li>');
+                            })
+                        });
+                    },
+                    error: function (jqXhr, textStatus, errorThrown) {
+                        $('.list').html(' User names not matching with search term: ' + searchTerm);
+                        console.log( errorThrown );
+                    }
+                })
+            }
+        </script>
+
+    </body>
+
+
+
+
+</html>
