@@ -1,15 +1,15 @@
 ## Search
 
-Endpoint to search for a user by lastname
+Endpoint to search for a user by his lastname
 
-##### Requirements
+### Requirements
 
 - Composer
 - Docker & Docker-compose
 
 To install composer please follow the step from here https://getcomposer.org/download/
 
-#### Install
+### Install
 
 
  ````
@@ -18,7 +18,7 @@ To install composer please follow the step from here https://getcomposer.org/dow
  cd search
  
  mv env.dist env
- # update .env with the required details
+ # update .env with the required database details
  
  mv docker-compose.yml-dist docker-composer.yml
  ````
@@ -41,19 +41,19 @@ docker-compose exec vt-php-fpm bin/console doctrine:migrations:migrate
 docker-compose exec vt-php-fpm php bin/console doctrine:fixtures:load
 ```
 
-#### Usage
+### Usage
 
 
 Open search.html file and enter name to search 
 ex: Cameron
 
 
-#### Testing
+### Testing
 To run Integration and Unit tests
 ````
 docker-compose exec vt-php-fpm bin/phpunit
 
 ````
 
-#### Credits
+### Credits
 Ansar Sheik @ 2020
